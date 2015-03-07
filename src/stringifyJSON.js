@@ -11,7 +11,6 @@ var bookEnd = function (string, start, end) {
 var stringifyJSON = function(obj) {
 	var string = "", i, key;
 	if (obj === undefined) {
-		return undefined;
 	}
 	if (obj === null) {
 		return 'null';
@@ -24,13 +23,13 @@ var stringifyJSON = function(obj) {
 	 	}
   	string = bookEnd(string, "[", "]");
   	} else if (typeof obj === "string") {
-	  	for (i = 0; i < obj.length; i++) {
-	  		string+= obj[i];
-	  	}
+  		string += obj;
   		string = bookEnd(string, "\"", "\"");
   	} else if (obj instanceof Object) {
   		for (key in obj) {
+  			if (typeof obj[key] !== "undefined" && typeof obj[key] !== "function"){
 	  		string += stringifyJSON(key) + ":" + stringifyJSON(obj[key])+",";
+	  		}
 	  	}
   		string = string.slice(0,string.length-1);
   		string = bookEnd(string, "{", "}");
